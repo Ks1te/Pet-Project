@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Rudenco Serghei — Web Developer</title>
+<meta name="description" content="Rudenco Serghei — 19 y/o ASEM IT student building fast, clean, accessible web interfaces for the US market."/>
+<meta name="color-scheme" content="dark light"/>
+<meta name="viewport" content="width=390, user-scalable=no">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="banner.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<style>
+:root{
+  --bg:#0b0f14; --bg-soft:#101623; --card:#0f1624;
+  --text:#e6e9ef; --muted:#a9b1bd;
+  --accent:#22d3ee; --accent-2:#f59e0b;
+  --ring:rgba(34,211,238,.45); --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.35);
+  --container:clamp(320px,92vw,1120px);
+}
+@media (prefers-color-scheme: light){
+  :root{--bg:#ffffff;--bg-soft:#f6f7fb;--card:#ffffff;--text:#0b0f14;--muted:#475569;--shadow:0 10px 30px rgba(2,8,23,.08)}
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:linear-gradient(180deg,var(--bg),var(--bg-soft));color:var(--text);line-height:1.6}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.container{width:var(--container);margin-inline:auto;padding:24px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:14px;font-weight:700;border:1px solid color-mix(in srgb,var(--text) 16%, transparent);background:linear-gradient(180deg,color-mix(in srgb,var(--card) 90%, #fff 10%), var(--card));transition:.2s transform,.2s box-shadow}
+.btn:hover{transform:translateY(-1px);box-shadow:0 10px 20px rgba(0,0,0,.15)}
+.btn.solid{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#0b0f14;border:none}
+.btn.ghost{background:transparent}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px solid color-mix(in srgb,var(--text) 18%, transparent);font-size:12px;color:var(--muted)}
+.mono{font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
+:focus-visible{outline:3px solid var(--ring);outline-offset:2px;border-radius:10px}
+
+/* Header */
+header{position:sticky;top:0;z-index:50;backdrop-filter:blur(8px);background:color-mix(in hsl, var(--bg-soft) 70%, transparent);border-bottom:1px solid color-mix(in srgb, var(--text) 12%, transparent)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;width:var(--container);margin:auto;padding:14px 24px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px}
+.avatar{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid var(--accent);box-shadow:0 0 0 2px color-mix(in srgb, var(--bg) 80%, transparent)}
+.dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 0 12px var(--accent)}
+.switch{display:inline-flex;align-items:center;gap:8px;border-radius:12px;padding:8px 12px;border:1px solid color-mix(in srgb, var(--text) 18%, transparent);cursor:pointer}
+
+/* Accent picker dots */
+.accent-dot{
+  width:16px;height:16px;border-radius:50%;
+  border:1px solid color-mix(in srgb, var(--text) 25%, transparent);
+  background: conic-gradient(var(--accent), var(--accent-2));
+  cursor:pointer;
+}
+.switch .accent-dot{display:inline-block;padding:0}
+
+/* Hero */
+.hero{padding:72px 24px 36px}
+.hero-card{
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(34,211,238,.15), transparent 55%),
+    radial-gradient(1000px 400px at 10% -10%, rgba(245,158,11,.10), transparent 50%),
+    var(--card);
+  border:1px solid color-mix(in srgb, var(--text) 10%, transparent);
+  border-radius:clamp(18px,3vw,28px); box-shadow:var(--shadow); padding:clamp(18px,5vw,42px)
+}
+.hero h1{font-size:clamp(28px,3.4vw,44px);line-height:1.15;margin:0 0 10px;font-weight:800}
+.hero p.sub{color:var(--muted);margin:0 0 18px}
+.kpis{display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 22px}
+.kpi{padding:8px 12px;border-radius:12px;border:1px dashed color-mix(in srgb, var(--text) 18%, transparent);color:var(--muted);font-size:14px}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+
+/* Sections */
+section{padding:28px 0}
+.section-title{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-weight:800;letter-spacing:.3px;text-transform:uppercase;color:var(--muted);font-size:13px}
+.chip{background:color-mix(in srgb, var(--text) 10%, transparent);padding:6px 10px;border-radius:999px}
+.cards{display:grid;gap:16px;grid-template-columns:repeat(12,1fr)}
+/* Box safety */
+.card{overflow:hidden}
+.trow{overflow:hidden;box-sizing:border-box;width:100%;grid-template-columns:minmax(120px,140px) minmax(0,1fr) auto;gap:12px}
+.trow > *{min-width:0}
+.value{text-align:right;white-space:nowrap;min-width:0}
+.change{max-width:92px;width:fit-content;text-align:center;justify-self:end;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;box-sizing:border-box}
+.spark{grid-column:1/-1;height:40px;border-radius:10px;overflow:hidden;border:1px dashed color-mix(in srgb,var(--text) 16%,transparent);background:color-mix(in srgb,var(--text) 4%,transparent);position:relative;box-sizing:border-box}
+.spark canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.change{display:none !important}
+
+@media (max-width:900px){.cards{grid-template-columns:repeat(6,1fr)}}
+@media (max-width:600px){.cards{grid-template-columns:repeat(1,1fr)}}
+.card{grid-column:span 4;background:var(--card);border:1px solid color-mix(in srgb, var(--text) 10%, transparent);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;transform:translateY(8px);opacity:0;transition:transform .5s ease, opacity .5s ease}
+.card.revealed{transform:translateY(0);opacity:1}
+.card h3{margin:0;font-size:18px}
+.pill{display:inline-block;font-size:12px;color:var(--muted);border:1px solid color-mix(in srgb, var(--text) 20%, transparent);padding:4px 8px;border-radius:999px;margin-right:6px}
+.meta{font-size:13px;color:var(--muted)}
+.links{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto}
+.links a{font-weight:700}
+.links a::after{content:"↗";margin-left:6px;opacity:.7}
+.links a.live{color:var(--accent)}
+.links a.code{color:var(--accent-2)}
+
+/* Filter */
+.filter{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 18px}
+.filter .btn{padding:8px 12px}
+.filter .btn[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 3px rgba(34,211,238,.15)}
+
+/* Split */
+.split{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+@media (max-width:900px){.split{grid-template-columns:1fr}}
+.list-clean{margin:0;padding-left:18px}
+.list-clean li{margin:6px 0}
+
+/* Skills section */
+.skills{display:grid;gap:10px}
+.skill{display:grid;grid-template-columns:160px 1fr;gap:12px;align-items:center}
+.skill > span{font-weight:600}
+.bar{height:10px;background:color-mix(in srgb, var(--text) 10%, transparent);border-radius:999px;overflow:hidden}
+.bar > span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:999px;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+@media (max-width:600px){ .skill{grid-template-columns:1fr} }
+
+/* Footer & extras */
+footer{margin-top:28px;border-top:1px solid color-mix(in srgb, var(--text) 10%, transparent);padding:26px 0 80px;color:var(--muted)}
+.top{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom, 0px));z-index:60}
+.progress{position:fixed;left:0;top:0;height:4px;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0%;z-index:80}
+
+/* Modal */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;place-items:center;z-index:100;padding:18px}
+.modal{background:var(--card);border:1px solid color-mix(in srgb,var(--text) 18%, transparent);border-radius:16px;max-width:820px;width:100%;padding:20px;box-shadow:var(--shadow)}
+.modal header{position:static;background:transparent;border:none;padding:0;margin:0 0 10px}
+.modal-close{float:right}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(30px);background:var(--card);border:1px solid color-mix(in srgb,var(--text) 18%, transparent);padding:10px 14px;border-radius:12px;opacity:0;transition:opacity .25s, transform .25s;z-index:120}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ===== Responsive polish ===== */
+@media (max-width: 420px){
+  .nav{flex-wrap:wrap;gap:8px}
+  .nav > div:last-child{width:100%;display:flex;flex-wrap:wrap;gap:8px}
+  .nav .btn, .nav .switch{flex:1 1 auto;justify-content:center}
+}
+@media (max-width: 360px){
+  .filter{gap:6px}
+  .filter .btn{padding:8px 10px;flex:1 1 45%}
+}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important;transition:none !important} }
+@media (pointer: coarse){ .card:hover{transform:none;box-shadow:var(--shadow)} }
+
+/* === BEAUTIFUL CRYPTO TRACKER === */
+.tracker{display:grid;gap:14px}
+.trow{display:grid;grid-template-columns:140px 1fr 120px;gap:12px;align-items:center;padding:10px;border-radius:12px;border:1px solid color-mix(in srgb,var(--text) 10%,transparent);background:linear-gradient(180deg,color-mix(in srgb,var(--card) 85%,#fff 15%),var(--card))}
+@media (max-width:640px){ .trow{grid-template-columns:1fr 1fr 1fr} }
+.coin{display:flex;align-items:center;gap:10px}
+.sym{font-weight:800}
+.name{color:var(--muted)}
+.value{font-variant-numeric:tabular-nums;font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;font-size:18px;transition:transform .25s ease}
+.value.pulse-up{animation: valUp .45s}
+.value.pulse-down{animation: valDown .45s}
+@keyframes valUp{ from{transform:scale(1)} 50%{transform:scale(1.05)} to{transform:scale(1)} }
+@keyframes valDown{ from{transform:scale(1)} 50%{transform:scale(.96)} to{transform:scale(1)} }
+.change{justify-self:end;font-weight:700;padding:6px 10px;border-radius:999px;background:color-mix(in srgb,var(--text) 7%,transparent);border:1px solid color-mix(in srgb,var(--text) 16%,transparent)}
+.change.up{color:#16a34a}
+.change.down{color:#dc2626}
+
+/* Sparkline container (fixed) */
+.spark{grid-column:1 / -1;height:40px;border-radius:10px;overflow:hidden;border:1px dashed color-mix(in srgb,var(--text) 16%,transparent);background:color-mix(in srgb,var(--text) 4%,transparent);position:relative}
+.spark canvas{position:absolute;inset:0;width:100%;height:100%;display:block;image-rendering:crisp-edges;transition:opacity .25s ease;opacity:.9}
+.spark canvas:hover{opacity:1}
+
+/* Status */
+.status{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;margin-top:4px}
+.dot-s{width:8px;height:8px;border-radius:50%}
+.dot-online{background:#22c55e;box-shadow:0 0 10px rgba(34,197,94,.6)}
+.dot-offline{background:#f59e0b;box-shadow:0 0 10px rgba(245,158,11,.6)}
+
+/* Skeleton */
+.skel{background:linear-gradient(90deg,color-mix(in srgb,var(--text) 5%,transparent) 0%,color-mix(in srgb,var(--text) 10%,transparent) 45%,color-mix(in srgb,var(--text) 5%,transparent) 100%);background-size:200% 100%;animation:shimmer 1.2s linear infinite;border-radius:8px;height:16px}
+@keyframes shimmer{to{background-position:-200% 0}}
+
+/* === A11y demo styles === */
+.a11y-demo{margin-top:8px}
+.a11y-demo > summary{list-style:none}
+.a11y-demo > summary::-webkit-details-marker{display:none}
+.a11y-demo > summary{cursor:pointer}
+.a11y-demo[open]{animation:fade .2s ease}
+@keyframes fade{from{opacity:.8;transform:translateY(-2px)}to{opacity:1;transform:none}}
+.field{display:grid;gap:6px;margin:12px 0}
+input, textarea{
+  width:100%;padding:12px 14px;border-radius:12px;
+  border:1px solid color-mix(in srgb,var(--text) 18%,transparent);
+  background:var(--card);color:var(--text)
+}
+.error{color:#ef4444;font-size:13px}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<header aria-label="Navigation">
+  <nav class="nav" role="navigation">
+    <div class="brand">
+      <span class="dot" aria-hidden="true"></span>
+      <img src="banner.png" alt="Rudenco Serghei avatar" class="avatar">
+      <span>Rudenco Serghei</span>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center">
+      <button id="theme" class="switch" aria-pressed="false" aria-label="Toggle dark mode">🌓 Theme</button>
+      <a class="btn" href="#projects">Projects</a>
+      <a class="btn" href="#services">Services</a>
+      <a class="btn" href="#contact">Contact</a>
+      <a class="btn solid" href="https://github.com/Ks1te" target="_blank" rel="noopener">View GitHub</a>
+      <div class="switch" role="group" aria-label="Accent color">
+        <button class="accent-dot" data-accent="#22d3ee" data-accent2="#f59e0b" title="Cyan/Amber" aria-label="Cyan/Amber"></button>
+        <button class="accent-dot" data-accent="#8b5cf6" data-accent2="#22c55e" title="Purple/Green" aria-label="Purple/Green"></button>
+        <button class="accent-dot" data-accent="#ef4444" data-accent2="#f59e0b" title="Red/Amber" aria-label="Red/Amber"></button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-card" aria-label="Intro">
+        <h1 id="typing" aria-live="polite">I build fast, clean web interfaces.</h1>
+        <p class="sub">19-year-old ASEM IT student — landing pages, form integrations, and API mini-apps for the US market.</p>
+        <div class="kpis" aria-label="Quick stats">
+          <span class="kpi mono">Clean, readable code</span>
+          <span class="kpi mono">Mobile-first, accessible</span>
+          <span class="kpi mono">Fast turnaround (24–48h)</span>
+        </div>
+        <div class="actions" role="group" aria-label="Actions">
+          <a class="btn solid" href="https://github.com/Ks1te" target="_blank" rel="noopener">🔗 View GitHub</a>
+          <a class="btn" href="http://linkedin.com/in/serghei-undefined-61627b251/" target="_blank" rel="noopener">💼 Connect on LinkedIn</a>
+          <button class="btn ghost" id="copyMail" data-mail="srudenco1@gmail.com">📧 Copy email</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container">
+      <p class="section-title"><span class="chip">Skills</span> • What I use</p>
+      <div class="card reveal" style="grid-column:1/-1">
+        <div class="skills">
+          <div class="skill"><span>HTML</span><div class="bar"><span data-p="95"></span></div></div>
+          <div class="skill"><span>CSS (Flexbox/Grid)</span><div class="bar"><span data-p="90"></span></div></div>
+          <div class="skill"><span>JavaScript</span><div class="bar"><span data-p="80"></span></div></div>
+          <div class="skill"><span>Accessibility</span><div class="bar"><span data-p="85"></span></div></div>
+          <div class="skill"><span>Git/GitHub</span><div class="bar"><span data-p="85"></span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+      <p class="section-title"><span class="chip">Featured Projects</span> • Build • Ship • Iterate</p>
+
+      <!-- FILTER -->
+      <div class="filter" role="tablist" aria-label="Project filters">
+        <button class="btn" data-filter="all" aria-pressed="true">All</button>
+        <button class="btn" data-filter="ui" aria-pressed="false">UI</button>
+        <button class="btn" data-filter="api" aria-pressed="false">API</button>
+        <button class="btn" data-filter="forms" aria-pressed="false">Forms</button>
+      </div>
+
+      <div class="cards" id="cardGrid">
+        <!-- Card 1 -->
+        <article class="card reveal" data-tags="ui forms" aria-labelledby="p1-title">
+          <h3 id="p1-title">Local Business Landing Page</h3>
+          <p class="meta">Stack: <span class="pill">HTML</span><span class="pill">CSS Grid</span><span class="pill">Formspree</span></p>
+          <p>Rebuilt layout, optimized WebP images, validated contact form. <strong>Lighthouse 89+</strong>, delivered in 2 days.</p>
+          <div class="image-center">
+        <img src="tlc.png" alt="Preview" />
+         </div>
+          <div class="links">
+            <a class="live" href="https://transfer-lowcost.ro/" target="_blank" rel="noopener">Live</a>
+            <a class="code" href="#" target="_blank" rel="noopener">Code</a>
+            <a href="#" class="btn ghost open-modal" data-project="lp">Details</a>
+          </div>
+        </article>
+
+        <!-- Card 2 (CRYPTO TRACKER LIVE) -->
+        <article class="card reveal" data-tags="api ui" aria-labelledby="p2-title">
+          <h3 id="p2-title">Crypto Price Tracker</h3>
+          <p class="meta"><span class="pill">JS fetch</span><span class="pill">Public API</span><span class="pill">Dark mode</span></p>
+          <p class="desc">Live USD prices for BTC, ETH & SOL. Updates every <strong>5s</strong>, with offline fallback + sparkline.</p>
+
+          <div class="tracker" id="tracker">
+            <div class="trow" data-coin="bitcoin" data-sym="BTC">
+              <div class="coin"><span class="sym">BTC</span><span class="name">Bitcoin</span></div>
+              <div class="value" data-field="price"><div class="skel" style="width:120px"></div></div>
+              <div class="change" data-field="change"><div class="skel" style="width:60px;height:14px"></div></div>
+              <div class="spark"><canvas data-field="spark"></canvas></div>
+            </div>
+            <div class="trow" data-coin="ethereum" data-sym="ETH">
+              <div class="coin"><span class="sym">ETH</span><span class="name">Ethereum</span></div>
+              <div class="value" data-field="price"><div class="skel" style="width:100px"></div></div>
+              <div class="change" data-field="change"><div class="skel" style="width:60px;height:14px"></div></div>
+              <div class="spark"><canvas data-field="spark"></canvas></div>
+            </div>
+            <div class="trow" data-coin="solana" data-sym="SOL">
+              <div class="coin"><span class="sym">SOL</span><span class="name">Solana</span></div>
+              <div class="value" data-field="price"><div class="skel" style="width:80px"></div></div>
+              <div class="change" data-field="change"><div class="skel" style="width:60px;height:14px"></div></div>
+              <div class="spark"><canvas data-field="spark"></canvas></div>
+            </div>
+          </div>
+
+          <div class="status">
+            <span class="dot-s dot-offline" id="netDot" aria-hidden="true"></span>
+            <span id="netText">Waiting for first update…</span>
+          </div>
+
+          <div class="links" style="justify-content:space-between;display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:6px">
+            <div>
+              <a class="live" href="#" target="_blank" rel="noopener">Live</a>
+              <a class="code" href="#" target="_blank" rel="noopener">Code</a>
+            </div>
+            <a href="#" class="btn ghost open-modal" data-project="tracker">Details</a>
+          </div>
+        </article>
+
+        <!-- Card 3 (WITH LIVE DEMO) -->
+        <article class="card reveal" data-tags="forms ui" aria-labelledby="p3-title">
+          <h3 id="p3-title">Accessible Form Validation</h3>
+          <p class="meta">Stack: <span class="pill">Vanilla JS</span><span class="pill">ARIA labels</span><span class="pill">A11y</span></p>
+          <p>Screen-reader friendly errors and clear visual feedback. <strong>0 accessibility issues</strong> in audit.</p>
+
+          <!-- Collapsible live demo -->
+          <details class="a11y-demo">
+            <summary class="btn ghost">▶︎ Try the form</summary>
+            <form id="a11yForm" novalidate style="margin-top:10px">
+              <div role="alert" id="formSummary" class="meta" aria-live="polite" style="margin:8px 0 12px"></div>
+
+              <div class="field">
+                <label for="name">Full name</label>
+                <input id="name" name="name" autocomplete="name" required
+                       aria-describedby="name-err" pattern="^[A-Za-zÀ-ÿ' -]{2,}$">
+                <p id="name-err" class="error" hidden>Name is required (letters/spaces only).</p>
+              </div>
+
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" required
+                       aria-describedby="email-err">
+                <p id="email-err" class="error" hidden>Enter a valid email address.</p>
+              </div>
+
+              <div class="field">
+                <label for="msg">Message</label>
+                <textarea id="msg" name="message" rows="5" minlength="10" required
+                          aria-describedby="msg-err"></textarea>
+                <p id="msg-err" class="error" hidden>Message must be at least 10 characters.</p>
+              </div>
+
+              <button class="btn solid">Send</button>
+            </form>
+          </details>
+
+          <div class="links">
+            <a class="live" href="#" target="_blank" rel="noopener">Live</a>
+            <a class="code" href="#" target="_blank" rel="noopener">Code</a>
+            <a href="#" class="btn ghost open-modal" data-project="form">Details</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASE STUDY + SERVICES -->
+  <section>
+    <div class="container split" id="services">
+      <article class="card reveal">
+        <h3>Mini Case Study</h3>
+        <p class="meta">Problem → Solution → Result</p>
+        <ul class="list-clean">
+          <li><strong>Problem:</strong> A local salon had a slow, outdated page.</li>
+          <li><strong>Solution:</strong> CSS Grid, compressed WebP images, Netlify deploy, Formspree contact.</li>
+          <li><strong>Result:</strong> Performance 92/100 and 15 leads/week.</li>
+        </ul>
+      </article>
+
+      <article class="card reveal">
+        <h3>Fast Services (24–48h)</h3>
+        <ul class="list-clean">
+          <li>Clean, responsive landing page</li>
+          <li>UX/CSS fixes + Lighthouse</li>
+          <li>Contact form to email/API</li>
+        </ul>
+        <div class="links">
+          <a class="live" href="mailto:srudenco1@gmail.com?subject=Project%20inquiry%20for%20Rudenco%20Serghei">Request a quote</a>
+          <a class="code" href="http://linkedin.com/in/serghei-undefined-61627b251/" target="_blank" rel="noopener">Book a quick call</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section>
+    <div class="container">
+      <p class="section-title"><span class="chip">About</span> • Who I am</p>
+      <div class="card reveal" style="grid-column:1/-1">
+        <p>Hi, I’m <strong>Rudenco Serghei</strong> — a 19-year-old ASEM IT student and junior web developer. I focus on clean UI, readable code, and fast feedback loops. I’m learning backend (Node.js / Python Flask) while building a practical portfolio for real clients.</p>
+        <p class="meta">Available: 5–10h/week. Replies in &lt;24h. Tools: HTML, CSS (Flexbox/Grid), JS, Git/GitHub, Netlify/Vercel.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <p class="section-title"><span class="chip">Contact</span> • Let’s work</p>
+      <div class="card reveal" style="grid-column:1/-1">
+        <p class="meta">Prefer email? Click the button — I’ll reply within 24 hours.</p>
+        <div class="links">
+          <a class="btn solid" href="mailto:srudenco1@gmail.com?subject=Project%20inquiry%20for%20Rudenco%20Serghei">Email me</a>
+          <a class="btn" href="https://github.com/Ks1te" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="http://linkedin.com/in/serghei-undefined-61627b251/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+      <span>© <span id="y"></span> Rudenco Serghei</span>
+      <span class="mono">Build • Ship • Iterate</span>
+    </div>
+  </footer>
+</main>
+
+<!-- MODAL -->
+<div class="modal-backdrop" id="backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <header>
+      <button class="btn modal-close" id="closeModal" aria-label="Close modal">✖</button>
+      <h3 id="modalTitle">Project details</h3>
+      <p class="meta" id="modalMeta"></p>
+    </header>
+    <div id="modalBody"><!-- filled by JS --></div>
+  </div>
+</div>
+
+<button class="btn solid top" id="toTop" aria-label="Back to top" title="Back to top">↑</button>
+<div class="toast" id="toast" role="status" aria-live="polite">Email copied</div>
+
+<script>
+/* ===== Theme toggle (persist) ===== */
+(function(){
+  const btn = document.getElementById('theme');
+  const KEY='theme';
+  const saved=localStorage.getItem(KEY);
+  if(saved){ document.documentElement.dataset.theme=saved; btn.setAttribute('aria-pressed', saved==='dark'); }
+  btn.addEventListener('click', ()=>{
+    const next=(document.documentElement.dataset.theme==='dark')?'light':'dark';
+    document.documentElement.dataset.theme=next;
+    localStorage.setItem(KEY,next);
+    btn.setAttribute('aria-pressed', next==='dark');
+  });
+})();
+
+/* ===== Typewriter ===== */
+(function(){
+  const el = document.getElementById('typing');
+  const base = "I build fast, clean web interfaces.";
+  const alts = [
+    "I ship landing pages in 24–48h.",
+    "I craft accessible, mobile-first UIs.",
+    "I integrate APIs & contact forms."
+  ];
+  let j=0, erase=false, altIndex=0;
+  function tick(){
+    const target = (altIndex===0)?base:alts[altIndex-1];
+    j += erase ? -1 : 1;
+    el.textContent = target.slice(0, j);
+    if(j===target.length){ erase=true; setTimeout(tick,1200); return;}
+    if(j===0){ erase=false; altIndex=(altIndex+1)%(alts.length+1); }
+    setTimeout(tick, erase?40:45);
+  }
+  setTimeout(tick, 800);
+})();
+
+/* ===== Reveal on scroll ===== */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('revealed'); io.unobserve(e.target);} })
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ===== Filter projects ===== */
+const filterButtons = document.querySelectorAll('.filter .btn');
+const cards = document.querySelectorAll('.cards .card');
+filterButtons.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    filterButtons.forEach(b=>b.setAttribute('aria-pressed','false'));
+    btn.setAttribute('aria-pressed','true');
+    const f = btn.dataset.filter;
+    cards.forEach(c=>{
+      const tags = (c.dataset.tags||'').split(' ');
+      const show = (f==='all') || tags.includes(f);
+      c.style.display = show ? '' : 'none';
+    });
+  });
+});
+
+/* ===== Modal project details ===== */
+const projects = {
+  lp: {
+    title:"Local Business Landing Page",
+    meta:"HTML • CSS Grid • Formspree",
+    body:`<p>Rebuilt layout with modern CSS Grid, optimized images (WebP), delivered a11y-friendly form. Lighthouse 89+, 2-day turnaround.</p>
+    <ul class="list-clean"><li>Responsive layout & lazy images</li><li>Form validation & ARIA</li><li>Netlify deploy, custom domain</li></ul>`
+  },
+  tracker: {
+    title:"Crypto Price Tracker",
+    meta:"JS fetch • Public API • Dark mode",
+    body:`<p>Fetches prices every 5s, graceful fallback if API rate-limits. Minimal footprint.</p>
+    <ul class="list-clean"><li>Debounced updates & error states</li><li>Dark/light mode sync</li><li>Readable, commented code</li></ul>`
+  },
+  form: {
+    title:"Accessible Form Validation",
+    meta:"Vanilla JS • ARIA labels • A11y",
+    body:`<p>Client-side validation with screen-reader friendly errors and clear focus rings.</p>
+    <ul class="list-clean"><li>No dependencies</li><li>WCAG contrast & focus</li><li>0 issues in audit</li></ul>`
+  }
+};
+const backdrop = document.getElementById('backdrop');
+const modalTitle = document.getElementById('modalTitle');
+const modalMeta = document.getElementById('modalMeta');
+const modalBody = document.getElementById('modalBody');
+document.querySelectorAll('.open-modal').forEach(a=>{
+  a.addEventListener('click',(e)=>{
+    e.preventDefault();
+    const id = a.dataset.project;
+    const p = projects[id];
+    modalTitle.textContent = p.title;
+    modalMeta.textContent = p.meta;
+    modalBody.innerHTML = p.body;
+    backdrop.style.display='grid';
+    document.getElementById('closeModal').focus();
+  });
+});
+document.getElementById('closeModal').addEventListener('click', ()=>backdrop.style.display='none');
+backdrop.addEventListener('click',(e)=>{ if(e.target===backdrop){ backdrop.style.display='none'; }});
+
+/* ===== Copy email + toast ===== */
+const toast = document.getElementById('toast');
+document.getElementById('copyMail').addEventListener('click', async (e)=>{
+  const mail = e.currentTarget.dataset.mail;
+  try{ await navigator.clipboard.writeText(mail); toast.textContent='Email copied: '+mail; }
+  catch{ toast.textContent='Copy failed. Long-press to copy.'; }
+  toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),1600);
+});
+
+/* ===== Back to top + scroll progress ===== */
+const toTop = document.getElementById('toTop');
+toTop.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+window.addEventListener('scroll', ()=>{
+  const doc = document.documentElement;
+  const scrolled = (doc.scrollTop)/(doc.scrollHeight-doc.clientHeight);
+  document.getElementById('progress').style.width = (scrolled*100)+'%';
+  toTop.style.opacity = (doc.scrollTop>300)?1:0;
+});
+
+/* ===== Accent color switcher (persist) ===== */
+(function(){
+  const KEY='accent';
+  const saved = JSON.parse(localStorage.getItem(KEY) || 'null');
+  if(saved){
+    document.documentElement.style.setProperty('--accent', saved.a);
+    document.documentElement.style.setProperty('--accent-2', saved.b);
+  }
+  document.querySelectorAll('.accent-dot').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const a = btn.dataset.accent, b = btn.dataset.accent2;
+      document.documentElement.style.setProperty('--accent', a);
+      document.documentElement.style.setProperty('--accent-2', b);
+      localStorage.setItem(KEY, JSON.stringify({a,b}));
+    });
+  });
+})();
+
+/* ===== Animate skill bars ===== */
+(function(){
+  const bars = document.querySelectorAll('.bar > span');
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const p = e.target.getAttribute('data-p') || 0;
+        e.target.style.width = p + '%';
+        obs.unobserve(e.target);
+      }
+    });
+  }, {threshold:.35});
+  bars.forEach(b=>obs.observe(b));
+})();
+
+/* ===== 3D tilt on cards (skip on touch) ===== */
+(function(){
+  if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
+  const cards = document.querySelectorAll('.cards .card');
+  cards.forEach(card=>{
+    card.style.transformStyle='preserve-3d';
+    card.addEventListener('mousemove', (e)=>{
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left)/r.width - .5;
+      const y = (e.clientY - r.top)/r.height - .5;
+      card.style.transform = `rotateY(${x*6}deg) rotateX(${-y*6}deg) translateY(0)`;
+    });
+    card.addEventListener('mouseleave', ()=>{ card.style.transform='translateY(0)'; });
+  });
+})();
+
+/* === CRYPTO TRACKER === */
+(function(){
+  const root = document.getElementById('tracker');
+  if(!root) return;
+
+  const API = 'https://api.coingecko.com/api/v3/simple/price'
+    + '?ids=bitcoin,ethereum,solana&vs_currencies=usd&include_24hr_change=true';
+  const STORAGE_KEY = 'tracker:last';
+  const POLL_MS = 5000;
+
+  const rows = Array.from(root.querySelectorAll('.trow')).map(r=>({
+    el: r,
+    id: r.dataset.coin,
+    sym: r.dataset.sym,
+    priceEl: r.querySelector('[data-field="price"]'),
+    changeEl: r.querySelector('[data-field="change"]'),
+    canvas: r.querySelector('[data-field="spark"]'),
+    history: []
+  }));
+
+  const dot = document.getElementById('netDot');
+  const netText = document.getElementById('netText');
+
+  const fmtPrice = (n)=> n>=1000
+    ? '$' + n.toLocaleString('en-US',{maximumFractionDigits:0})
+    : '$' + n.toLocaleString('en-US',{maximumFractionDigits:2});
+  const fmtChange = (n)=> (n>0? '+':'') + n.toFixed(2) + '%';
+
+  function setStatus(online){
+    if(online){ dot.classList.remove('dot-offline'); dot.classList.add('dot-online'); netText.textContent='Live • updated ' + new Date().toLocaleTimeString(); }
+    else{ dot.classList.remove('dot-online'); dot.classList.add('dot-offline'); netText.textContent='Offline • showing last saved data'; }
+  }
+
+  function tweenNumber(el, from, to, fmt, pulseClass){
+    const start = performance.now(), D=420;
+    function step(t){
+      const k = Math.min(1,(t-start)/D);
+      const v = from + (to-from)*(0.5 - 0.5*Math.cos(Math.PI*k));
+      el.textContent = fmt(v);
+      if(k<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+    el.classList.remove('pulse-up','pulse-down');
+    if(pulseClass){ el.classList.add(pulseClass); setTimeout(()=>el.classList.remove(pulseClass),450); }
+  }
+
+  function drawSpark(canvas, history){
+    const ctx  = canvas.getContext('2d');
+    const dpr  = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width  = Math.max(1, Math.round(rect.width  * dpr));
+    canvas.height = Math.max(1, Math.round(rect.height * dpr));
+    const cw = rect.width, ch = rect.height;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, cw, ch);
+    if(history.length < 2) return;
+
+    const min = Math.min(...history), max = Math.max(...history);
+    const pad = 0.08 * (max - min || 1);
+    const lo  = min - pad, hi = max + pad;
+
+    ctx.lineWidth = 2; ctx.lineJoin='round'; ctx.miterLimit=1;
+    const styles = getComputedStyle(document.documentElement);
+    const grad = ctx.createLinearGradient(0, 0, cw, 0);
+    grad.addColorStop(0, styles.getPropertyValue('--accent').trim());
+    grad.addColorStop(1, styles.getPropertyValue('--accent-2').trim());
+    ctx.strokeStyle = grad;
+
+    ctx.beginPath();
+    history.forEach((val,i)=>{
+      const x = (i/(history.length-1))*cw;
+      const y = ch - ((val - lo)/(hi - lo))*ch;
+      i ? ctx.lineTo(x,y) : ctx.moveTo(x,y);
+    });
+    ctx.stroke();
+
+    const under = ctx.createLinearGradient(0, 0, 0, ch);
+    under.addColorStop(0,'rgba(34,211,238,.20)');
+    under.addColorStop(1,'rgba(34,211,238,0)');
+    ctx.fillStyle = under;
+
+    ctx.lineTo(cw, ch);
+    ctx.lineTo(0,  ch);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function paintAll(data, online){
+    setStatus(online);
+    rows.forEach(row=>{
+      const d = data[row.id]; if(!d) return;
+      const nextPrice = d.usd;
+      const nextChange = d.usd_24h_change;
+
+      row.priceEl.querySelector('.skel')?.remove();
+      row.changeEl.querySelector('.skel')?.remove();
+
+      const prevText = row.priceEl.dataset.prev;
+      const prev = prevText? parseFloat(prevText) : nextPrice;
+
+      const pulse = (nextPrice>=prev) ? 'pulse-up' : 'pulse-down';
+      tweenNumber(row.priceEl, prev, nextPrice, fmtPrice, pulse);
+      row.priceEl.dataset.prev = nextPrice;
+
+      // (percent pill is visually hidden by CSS but logic stays)
+      row.changeEl.textContent = fmtChange(nextChange);
+      row.changeEl.classList.toggle('up', nextChange>=0);
+      row.changeEl.classList.toggle('down', nextChange<0);
+
+      row.history.push(nextPrice);
+      if(row.history.length>60) row.history.shift();
+      drawSpark(row.canvas, row.history);
+    });
+  }
+
+  async function fetchJSON(url, ms=4500){
+    const ctl = new AbortController(), t = setTimeout(()=>ctl.abort(), ms);
+    try{
+      const res = await fetch(url,{signal:ctl.signal, cache:'no-store'});
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      return await res.json();
+    } finally { clearTimeout(t); }
+  }
+
+  async function poll(){
+    try{
+      const json = await fetchJSON(API);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({t:Date.now(), data:json}));
+      paintAll(json, true);
+      setTimeout(poll, 5000);
+    }catch(e){
+      const cached = localStorage.getItem(STORAGE_KEY);
+      if(cached){ try{ paintAll(JSON.parse(cached).data, false); }catch{} }
+      else{ setStatus(false); }
+      setTimeout(poll, 10000);
+    }
+  }
+
+  const cached = localStorage.getItem(STORAGE_KEY);
+  if(cached){ try{ paintAll(JSON.parse(cached).data, false); }catch{} }
+
+  let sparkRaf = 0;
+  window.addEventListener('resize', ()=>{
+    cancelAnimationFrame(sparkRaf);
+    sparkRaf = requestAnimationFrame(()=> rows.forEach(r=>drawSpark(r.canvas, r.history)));
+  });
+
+  poll();
+})();
+
+/* === A11y form logic === */
+(function(){
+  const form = document.getElementById('a11yForm');
+  if(!form) return;
+  const summary = document.getElementById('formSummary');
+  const fields = [
+    {el: form.name, err: document.getElementById('name-err'),
+      test: v => /^[A-Za-zÀ-ÿ' -]{2,}$/.test(v)},
+    {el: form.email, err: document.getElementById('email-err'),
+      test: v => /\S+@\S+\.\S+/.test(v)},
+    {el: form.message, err: document.getElementById('msg-err'),
+      test: v => (v||'').trim().length >= 10},
+  ];
+
+  function validateField(f){
+    const ok = f.test(f.el.value.trim());
+    f.err.hidden = ok;
+    f.el.setAttribute('aria-invalid', ok ? 'false' : 'true');
+    return ok;
+  }
+
+  fields.forEach(f => f.el.addEventListener('blur', () => validateField(f)));
+
+  form.addEventListener('submit', e=>{
+    e.preventDefault();
+    const bad = fields.filter(f => !validateField(f));
+    if(bad.length){
+      summary.textContent = `Please fix ${bad.length} field(s): `
+        + bad.map(f => f.el.labels[0].textContent).join(', ') + '.';
+      bad[0].el.focus();
+      return;
+    }
+    summary.textContent = '✅ Sent ! (demo)';
+    form.reset();
+    fields.forEach(f => { f.err.hidden = true; f.el.setAttribute('aria-invalid','false'); });
+  });
+})();
+
+/* Year */
+document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
